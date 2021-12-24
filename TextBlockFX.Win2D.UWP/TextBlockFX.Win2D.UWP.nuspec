@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>TextBlockFX.Win2D.UWP</id>
+    <version>1.0.0</version>
+    <title>TextBlockFX for Windows(UWP) powered by Win2D</title>
+    <authors>Void²</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <!-- <icon>icon.png</icon> -->
+    <projectUrl>https://github.com/validvoid/TextBlockFX/</projectUrl>
+    <description>A TextBlock control which animates the text with customizable effects.</description>
+    <releaseNotes>Please visit the github repository to view the release notes.</releaseNotes>
+    <copyright>Copyright 2021 Void²</copyright>
+    <tags>uwp winui windows win2d text textblock</tags>
+
+    <dependencies>
+      <group targetFramework="uap10.0.17763">
+        <dependency id="Win2D.uwp" version="1.26.0" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\**.*" target="lib\uap10.0.17763"/>
+  </files>
+</package>
