@@ -30,6 +30,20 @@
                     DefaultLabelPosition="Right" 
                     HorizontalAlignment="Center">
             <AppBarElementContainer VerticalContentAlignment="Center">
+                <ComboBox x:Name="TextComboBox"
+                          Margin="5,0"
+                          MinWidth="200"
+                          SelectedIndex="{x:Bind SelectedSampleTextIndex, Mode = TwoWay}"
+                          Loaded="TextComboBox_OnLoaded">
+                    <x:String>In Other Words</x:String>
+                    <x:String>Mencius (in Chinese)</x:String>
+                </ComboBox>
+            </AppBarElementContainer>
+            <AppBarSeparator/>
+            <AppBarElementContainer VerticalContentAlignment="Center">
+                <TextBlock Text="Effect:" Margin="5,0"/>
+            </AppBarElementContainer>
+            <AppBarElementContainer VerticalContentAlignment="Center">
                 <ComboBox x:Name="EffectComboBox"
                           Margin="5,0"
                           MinWidth="200"
@@ -40,7 +54,11 @@
                           Loaded="EffectComboBox_OnLoaded"/>
             </AppBarElementContainer>
             <AppBarSeparator/>
-            <AppBarToggleButton x:Name="AutoPlayButton" Icon="Play" Label="Play sample texts" Click="AutoPlayButton_OnClick"/>
+            <AppBarToggleButton x:Name="AutoPlayButton" 
+                                Margin="5,0"
+                                Icon="Play" 
+                                Label="Play sample texts" 
+                                Click="AutoPlayButton_OnClick"/>
         </CommandBar>
         <TextBox x:Name="InputBox" 
                  Grid.Row="2" 

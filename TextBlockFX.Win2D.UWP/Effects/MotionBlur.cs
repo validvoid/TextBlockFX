@@ -224,7 +224,7 @@ namespace TextBlockFX.Win2D.UWP.Effects
             using (CanvasDrawingSession clds = oCl.CreateDrawingSession())
             {
                 clds.Transform = Matrix3x2.CreateTranslation(0,
-                    (float)(-oldCluster.LayoutBounds.Height * oldProgress));
+                    (float)(-oldCluster.LayoutBounds.Height * 0.5 * oldProgress));
 
                 clds.DrawText(
                     oldCluster.IsTrimmed
@@ -304,7 +304,7 @@ namespace TextBlockFX.Win2D.UWP.Effects
             using (CanvasDrawingSession clds = cl.CreateDrawingSession())
             {
                 clds.Transform = Matrix3x2.CreateTranslation(0,
-                    (float)(-oldCluster.LayoutBounds.Height * oldProgress));
+                    (float)(-oldCluster.LayoutBounds.Height * 0.5 * oldProgress));
 
                 clds.DrawText(
                     oldCluster.IsTrimmed

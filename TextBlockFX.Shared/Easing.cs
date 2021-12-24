@@ -136,8 +136,6 @@ namespace TextBlockFX
                     break;
             }
 
-            r = Math.Clamp(r, 0.0f, 1.0f);
-
             return r;
         }
 

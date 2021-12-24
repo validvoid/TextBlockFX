@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Numerics;
-using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
-using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI;
@@ -436,7 +433,7 @@ namespace TextBlockFX.Win2D.UWP
         private void UpdateAllClusterProgress(CanvasTimingInformation timing)
         {
             var animationDuration = _textEffect?.AnimationDuration ?? TimeSpan.FromMilliseconds(600);
-            var delayPerCluster = _textEffect?.DelayPerCluster ?? TimeSpan.FromMilliseconds(10);
+            var delayPerCluster = _textEffect?.DelayPerCluster ?? TimeSpan.FromMilliseconds(0);
 
             float step = (float)(1 / (animationDuration.TotalMilliseconds / timing.ElapsedTime.TotalMilliseconds));
 
@@ -513,21 +510,32 @@ namespace TextBlockFX.Win2D.UWP
             if (cluster == null)
                 return true;
 
-            var delayPerCluster = _textEffect?.DelayPerCluster ?? TimeSpan.FromMilliseconds(10);
+            var duration = _textEffect?.AnimationDuration ?? TimeSpan.FromMilliseconds(0);
+
+            bool isFinished = timing.TotalTime.TotalMilliseconds >=
+                              (_animationBeginTime.TotalMilliseconds +
+                               delay.TotalMilliseconds * offset +
+                               duration.TotalMilliseconds);
+
+            if (isFinished)
+            {
+                cluster.Progress = 1.0f;
+                return true;
+            }
 
             float progress = cluster.Progress + step;
 
-            if (delayPerCluster.TotalMilliseconds > 0)
+            if ((timing.TotalTime.TotalMilliseconds - _animationBeginTime.TotalMilliseconds <
+                 delay.TotalMilliseconds * offset))
             {
-                if ((timing.TotalTime.TotalMilliseconds - _animationBeginTime.TotalMilliseconds <
-                    delay.TotalMilliseconds * offset))
-                {
-                    progress = 0;
-                }
+                progress = 0;
             }
+
+            progress = Math.Clamp(progress, 0, 1.0f);
+
             cluster.Progress = progress;
 
-            return cluster.Progress >= 1.0f;
+            return false;
         }
 
         private void ResetAllClusterProgress()
