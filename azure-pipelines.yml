@@ -26,7 +26,7 @@ steps:
   inputs:
     solution: '**/TextBlockFX.Win2D.UWP/TextBlockFX.Win2D.UWP.csproj'
     msbuildArgs: '/p:AppxBundlePlatforms="$(buildPlatform)" /p:AppxPackageDir="$(appxPackageDir)" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload'
-    platform: 'any cpu'
+    platform: 'AnyCPU'
     configuration: '$(buildConfiguration)'
     clean: true
 
