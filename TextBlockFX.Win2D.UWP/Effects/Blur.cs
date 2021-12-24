@@ -14,9 +14,15 @@ namespace TextBlockFX.Win2D.WinUI.Effects
 namespace TextBlockFX.Win2D.UWP.Effects
 #endif
 {
+    /// <summary>
+    /// Built-in blur effect of TextBlockFX
+    /// </summary>
     public class Blur : ITextEffect
     {
+        /// <inheritdoc />
         public TimeSpan AnimationDuration { get; set; } = TimeSpan.FromMilliseconds(800);
+
+        /// <inheritdoc />
         public TimeSpan DelayPerCluster { get; set; } = TimeSpan.FromMilliseconds(20);
 
         public void Update(string oldText,
@@ -31,6 +37,7 @@ namespace TextBlockFX.Win2D.UWP.Effects
 
         }
 
+        /// <inheritdoc />
         public void DrawText(string oldText,
             string newText,
             List<TextDiffResult> diffResults,
