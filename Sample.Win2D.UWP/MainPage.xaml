@@ -23,8 +23,8 @@
             TextAlignment="Center"
             TextTrimming="CharacterEllipsis"
             RedrawStateChanged="TBFX_OnRedrawStateChanged">
-            <TBFX:TextBlockFX.TextEffect/>
         </TBFX:TextBlockFX>
+
         <CommandBar Grid.Row="1" 
                     IsOpen="False" 
                     DefaultLabelPosition="Right" 
