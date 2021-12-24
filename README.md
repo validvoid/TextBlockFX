@@ -16,7 +16,7 @@ In Solution Explorer panel, right click on your project name and select Manage N
 Or enter the following command in Package Manager Console to install it:
 
 ```powershell
-Install-Package TextBlockFX.Win2D.UWP -Version 1.0.1
+Install-Package TextBlockFX.Win2D.UWP
 ```
 
 ### Usage
