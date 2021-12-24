@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>b2e9bf21-af69-44ff-9135-510f04f946fe</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>TextBlockFX.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)TextDiffResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DiffOperationType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ColorExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GraphemeClusterDiff.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Easing.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GraphemeCluster.cs" />
+  </ItemGroup>
+</Project>
