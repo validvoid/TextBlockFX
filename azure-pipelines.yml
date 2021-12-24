@@ -7,9 +7,6 @@ trigger:
   tags:
     include:
     - '*'
-  branches:
-    include:
-      - main
 
 pool:
   vmImage: 'windows-latest'
@@ -42,7 +39,8 @@ steps:
     versioningScheme: 'off'
     packDestination: '$(Build.ArtifactStagingDirectory)'
 
-- task: PublishPipelineArtifact@1
+- task: PublishBuildArtifacts@1
   inputs:
-    targetPath: '$(Pipeline.Workspace)'
-    publishLocation: 'pipeline'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
