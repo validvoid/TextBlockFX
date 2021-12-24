@@ -20,13 +20,13 @@ steps:
 
 - task: NuGetCommand@2
   inputs:
-    restoreSolution: '$(solution)'
+    restoreSolution: '**/TextBlockFX.Win2D.UWP/TextBlockFX.Win2D.UWP.csproj'
 
 - task: VSBuild@1
   inputs:
     solution: '**/TextBlockFX.Win2D.UWP/TextBlockFX.Win2D.UWP.csproj'
     msbuildArgs: '/p:AppxBundlePlatforms="$(buildPlatform)" /p:AppxPackageDir="$(appxPackageDir)" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload'
-    platform: 'x86'
+    platform: 'any cpu'
     configuration: '$(buildConfiguration)'
     clean: true
 
