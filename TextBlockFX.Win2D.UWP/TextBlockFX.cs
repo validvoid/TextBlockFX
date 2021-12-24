@@ -26,6 +26,9 @@ namespace TextBlockFX.Win2D.WinUI
 namespace TextBlockFX.Win2D.UWP
 #endif
 {
+    /// <summary>
+    /// A lightweight control for displaying small amounts of animated text.
+    /// </summary>
     [TemplatePart(Name = "ContentBorder", Type = typeof(Border))]
     [TemplatePart(Name = "AnimatedCanvas", Type = typeof(CanvasAnimatedControl))]
     public sealed class TextBlockFX : Control
@@ -62,9 +65,15 @@ namespace TextBlockFX.Win2D.UWP
 
         #region Properties
 
+        /// <summary>
+        /// Identifies the Text dependency property.
+        /// </summary>
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
             "Text", typeof(string), typeof(TextBlockFX), new PropertyMetadata(default(string)));
 
+        /// <summary>
+        /// Gets or sets the text contents of a TextBlockFX.
+        /// </summary>
         public string Text
         {
             get { return (string)GetValue(TextProperty); }
@@ -79,9 +88,15 @@ namespace TextBlockFX.Win2D.UWP
             }
         }
 
+        /// <summary>
+        /// Identifies the TextEffect dependency property.
+        /// </summary>
         public static readonly DependencyProperty TextEffectProperty = DependencyProperty.Register(
             "TextEffect", typeof(ITextEffect), typeof(TextBlockFX), new PropertyMetadata(default(ITextEffect)));
 
+        /// <summary>
+        /// Gets or sets the effect for animating text.
+        /// </summary>
         public ITextEffect TextEffect
         {
             get { return (ITextEffect)GetValue(TextEffectProperty); }
@@ -92,9 +107,15 @@ namespace TextBlockFX.Win2D.UWP
             }
         }
 
+        /// <summary>
+        /// Identifies the FontFamily dependency property.
+        /// </summary>
         public new static readonly DependencyProperty FontFamilyProperty = DependencyProperty.Register(
             "FontFamily", typeof(FontFamily), typeof(TextBlockFX), new PropertyMetadata(default(FontFamily)));
 
+        /// <summary>
+        /// Gets or sets the preferred top-level font family for the text content.
+        /// </summary>
         public new FontFamily FontFamily
         {
             get { return (FontFamily)GetValue(FontFamilyProperty); }
@@ -105,9 +126,15 @@ namespace TextBlockFX.Win2D.UWP
             }
         }
 
+        /// <summary>
+        /// Identifies the FontSize dependency property.
+        /// </summary>
         public new static readonly DependencyProperty FontSizeProperty = DependencyProperty.Register(
             "FontSize", typeof(double), typeof(TextBlockFX), new PropertyMetadata(default(double)));
 
+        /// <summary>
+        /// Gets or sets the font size for the text content.
+        /// </summary>
         public new double FontSize
         {
             get { return (double)GetValue(FontSizeProperty); }
@@ -118,9 +145,15 @@ namespace TextBlockFX.Win2D.UWP
             }
         }
 
+        /// <summary>
+        /// Identifies the FontStretch dependency property.
+        /// </summary>
         public new static readonly DependencyProperty FontStretchProperty = DependencyProperty.Register(
             "FontStretch", typeof(FontStretch), typeof(TextBlockFX), new PropertyMetadata(default(FontStretch)));
 
+        /// <summary>
+        /// Gets or sets the font stretch for the text content.
+        /// </summary>
         public new FontStretch FontStretch
         {
             get { return (FontStretch)GetValue(FontStretchProperty); }
@@ -131,9 +164,15 @@ namespace TextBlockFX.Win2D.UWP
             }
         }
 
+        /// <summary>
+        /// Identifies the FontStyle dependency property.
+        /// </summary>
         public new static readonly DependencyProperty FontStyleProperty = DependencyProperty.Register(
             "FontStyle", typeof(FontStyle), typeof(TextBlockFX), new PropertyMetadata(default(FontStyle)));
 
+        /// <summary>
+        /// Gets or sets the font style for the content.
+        /// </summary>
         public new FontStyle FontStyle
         {
             get { return (FontStyle)GetValue(FontStyleProperty); }
@@ -144,9 +183,15 @@ namespace TextBlockFX.Win2D.UWP
             }
         }
 
+        /// <summary>
+        /// Identifies the FontStyle dependency property.
+        /// </summary>
         public new static readonly DependencyProperty FontWeightProperty = DependencyProperty.Register(
             "FontWeight", typeof(FontWeight), typeof(TextBlockFX), new PropertyMetadata(default(FontWeight)));
 
+        /// <summary>
+        /// Gets or sets the top-level font weight for the TextBlockFX.
+        /// </summary>
         public new FontWeight FontWeight
         {
             get { return (FontWeight)GetValue(FontWeightProperty); }
@@ -157,9 +202,15 @@ namespace TextBlockFX.Win2D.UWP
             }
         }
 
+        /// <summary>
+        /// Identifies the Foreground dependency property.
+        /// </summary>
         public new static readonly DependencyProperty ForegroundProperty = DependencyProperty.Register(
             "Foreground", typeof(Brush), typeof(TextBlockFX), new PropertyMetadata(default(Brush)));
 
+        /// <summary>
+        /// Gets or sets the Brush to apply to the text contents of the TextBlockFX.
+        /// </summary>
         public new Brush Foreground
         {
             get { return (Brush)GetValue(ForegroundProperty); }
@@ -193,9 +244,15 @@ namespace TextBlockFX.Win2D.UWP
             }
         }
 
+        /// <summary>
+        /// Identifies the TextAlignment dependency property.
+        /// </summary>
         public static readonly DependencyProperty TextAlignmentProperty = DependencyProperty.Register(
             "TextAlignment", typeof(TextAlignment), typeof(TextBlockFX), new PropertyMetadata(default(TextAlignment)));
 
+        /// <summary>
+        /// Gets or sets a value that indicates the horizontal alignment of text content.
+        /// </summary>
         public TextAlignment TextAlignment
         {
             get { return (TextAlignment)GetValue(TextAlignmentProperty); }
@@ -206,9 +263,15 @@ namespace TextBlockFX.Win2D.UWP
             }
         }
 
+        /// <summary>
+        /// Identifies the TextDirection dependency property.
+        /// </summary>
         public static readonly DependencyProperty TextDirectionProperty = DependencyProperty.Register(
             "TextDirection", typeof(TextDirection), typeof(TextBlockFX), new PropertyMetadata(default(TextDirection)));
 
+        /// <summary>
+        /// Gets or sets a value that indicates direction in which the text is read.
+        /// </summary>
         public TextDirection TextDirection
         {
             get { return (TextDirection)GetValue(TextDirectionProperty); }
@@ -219,9 +282,15 @@ namespace TextBlockFX.Win2D.UWP
             }
         }
 
+        /// <summary>
+        /// Identifies the TextTrimming dependency property.
+        /// </summary>
         public static readonly DependencyProperty TextTrimmingProperty = DependencyProperty.Register(
             "TextTrimming", typeof(TextTrimming), typeof(TextBlockFX), new PropertyMetadata(default(TextTrimming)));
 
+        /// <summary>
+        /// Gets or sets the text trimming behavior to employ when content overflows the content area.
+        /// </summary>
         public TextTrimming TextTrimming
         {
             get { return (TextTrimming)GetValue(TextTrimmingProperty); }
@@ -232,9 +301,15 @@ namespace TextBlockFX.Win2D.UWP
             }
         }
 
+        /// <summary>
+        /// Identifies the TextWrapping  dependency property.
+        /// </summary>
         public static readonly DependencyProperty TextWrappingProperty = DependencyProperty.Register(
             "TextWrapping", typeof(TextWrapping), typeof(TextBlockFX), new PropertyMetadata(default(TextWrapping)));
 
+        /// <summary>
+        /// Gets or sets how the TextBlockFX wraps text.
+        /// </summary>
         public TextWrapping TextWrapping
         {
             get { return (TextWrapping)GetValue(TextWrappingProperty); }
@@ -245,12 +320,21 @@ namespace TextBlockFX.Win2D.UWP
             }
         }
 
+        /// <summary>
+        /// Gets whether TextBlockFX is animating the text.
+        /// </summary>
         public bool IsAnimating => _currentState != RedrawState.Idle;
 
         #endregion
 
+        /// <summary>
+        /// Occurs when the redraw state has changed.
+        /// </summary>
         public event EventHandler<RedrawState> RedrawStateChanged;
 
+        /// <summary>
+        /// Initializes a new instance of the TextBlockFX class.
+        /// </summary>
         public TextBlockFX()
         {
             this.DefaultStyleKey = typeof(TextBlockFX);
@@ -258,6 +342,7 @@ namespace TextBlockFX.Win2D.UWP
             _textFormat.TrimmingSign = CanvasTrimmingSign.Ellipsis;
         }
 
+        /// <inheritdoc />
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
