@@ -4,7 +4,12 @@
 # https://aka.ms/yaml
 
 trigger:
-- main
+  tags:
+    include:
+    - '*'
+  branches:
+    include:
+      - main
 
 pool:
   vmImage: 'windows-latest'
@@ -37,3 +42,7 @@ steps:
     versioningScheme: 'off'
     packDestination: '$(Build.ArtifactStagingDirectory)'
 
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Build.ArtifactStagingDirectory)'
+    publishLocation: 'pipeline'
