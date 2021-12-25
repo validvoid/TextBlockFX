@@ -32,7 +32,9 @@ Then add TextBlockFX to your page:
 
 ```xaml
 <tbfx:TextBlockFX Text="Your text here">
-    <effects:Default/>
+    <tbfx:TextBlockFX.TextEffect>
+        <effects:Default/>
+    </tbfx:TextBlockFX.TextEffect>
 </tbfx:TextBlockFX>
 ```
 

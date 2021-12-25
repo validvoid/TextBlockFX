@@ -338,8 +338,16 @@ namespace TextBlockFX.Win2D.UWP
         public TextBlockFX()
         {
             this.DefaultStyleKey = typeof(TextBlockFX);
+            this.Loaded += TextBlockFX_Loaded;
 
             _textFormat.TrimmingSign = CanvasTrimmingSign.Ellipsis;
+        }
+
+        private void TextBlockFX_Loaded(object sender, RoutedEventArgs e)
+        {
+            _newText = Text ?? string.Empty;
+
+            SetRedrawState(RedrawState.TextChanged, false);
         }
 
         /// <inheritdoc />
