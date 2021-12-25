@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>TextBlockFX.Win2D.UWP</id>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <title>TextBlockFX for Windows(UWP) powered by Win2D</title>
     <authors>Void²</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
