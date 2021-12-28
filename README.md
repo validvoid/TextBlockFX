@@ -14,6 +14,8 @@ https://user-images.githubusercontent.com/8193074/147348037-efe70068-d188-4a26-a
 
 ### Install
 
+![](https://img.shields.io/nuget/v/TextBlockFX.Win2D.UWP?style=flat-square)
+
 In Solution Explorer panel, right click on your project name and select Manage NuGet Packages. Search for `TextBlockFX.Win2D.UWP` then click **install** to install the package.
 
 Or enter the following command in Package Manager Console to install it:
