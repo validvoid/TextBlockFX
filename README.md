@@ -1,4 +1,7 @@
+![TextBlockFX_Logo_Large](https://user-images.githubusercontent.com/8193074/147546728-6149baa5-a4b1-4c4a-bcc3-01946f741e5b.png)
+
 # TextBlockFX
+
 A TextBlock control which animates the text with customizable effects.
 
 TextBlockFx generates difference results for attached effect to animate the text when its content changes by using its built-in diffing algorithm.
