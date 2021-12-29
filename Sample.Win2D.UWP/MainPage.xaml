@@ -7,69 +7,133 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:TBFX="using:TextBlockFX.Win2D.UWP"
     xmlns:effects="using:TextBlockFX.Win2D.UWP.Effects"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:controls="using:Sample.Win2D.UWP.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}">
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <TBFX:TextBlockFX x:Name="TBFX"
-            Margin="10"
-            TextWrapping="Wrap" 
-            FontSize="36"
-            TextAlignment="Center"
-            TextTrimming="CharacterEllipsis"
-            RedrawStateChanged="TBFX_OnRedrawStateChanged">
-        </TBFX:TextBlockFX>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <CommandBar Grid.Row="1" 
-                    IsOpen="False" 
-                    DefaultLabelPosition="Right" 
-                    HorizontalAlignment="Center">
-            <AppBarElementContainer VerticalContentAlignment="Center">
-                <ComboBox x:Name="TextComboBox"
-                          Margin="5,0"
-                          MinWidth="200"
-                          SelectedIndex="{x:Bind SelectedSampleTextIndex, Mode = TwoWay}"
-                          Loaded="TextComboBox_OnLoaded">
-                    <x:String>In Other Words</x:String>
-                    <x:String>Mencius (in Chinese)</x:String>
-                </ComboBox>
-            </AppBarElementContainer>
-            <AppBarSeparator/>
-            <AppBarElementContainer VerticalContentAlignment="Center">
-                <TextBlock Text="Effect:" Margin="5,0"/>
-            </AppBarElementContainer>
-            <AppBarElementContainer VerticalContentAlignment="Center">
-                <ComboBox x:Name="EffectComboBox"
-                          Margin="5,0"
-                          MinWidth="200"
-                          ItemsSource="{x:Bind BuiltInEffects}" 
-                          DisplayMemberPath="Name" 
-                          SelectedValuePath="Effect"
-                          SelectedValue="{x:Bind SelectedEffect, Mode = TwoWay}"
-                          Loaded="EffectComboBox_OnLoaded"/>
-            </AppBarElementContainer>
-            <AppBarSeparator/>
-            <AppBarToggleButton x:Name="AutoPlayButton" 
-                                Margin="5,0"
-                                Icon="Play" 
-                                Label="Play sample texts" 
-                                Click="AutoPlayButton_OnClick"/>
-        </CommandBar>
-        <TextBox x:Name="InputBox" 
-                 Grid.Row="2" 
-                 Grid.ColumnSpan="2"
-                 Margin="10"
-                 AcceptsReturn="True" 
-                 TextWrapping="Wrap"
-                 ScrollViewer.HorizontalScrollMode="Disabled"
-                 ScrollViewer.VerticalScrollMode="Auto"
-                 ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                 ScrollViewer.VerticalScrollBarVisibility="Auto"
-                 TextChanged="InputBox_OnTextChanged"/>
+        <Border
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="4"
+            Padding="10"
+            Margin="10">
+            <ScrollViewer>
+                <StackPanel Orientation="Vertical" Spacing="10">
+                    <muxc:Expander
+                              IsExpanded="True"
+                              HorizontalAlignment="Stretch"
+                              Header="Effects">
+                        <StackPanel Orientation="Vertical" 
+                                    Spacing="10" 
+                                    HorizontalAlignment="Stretch">
+                            <ComboBox x:Name="EffectComboBox"
+                                      HorizontalAlignment="Stretch"
+                                      ItemsSource="{x:Bind BuiltInEffects}" 
+                                      DisplayMemberPath="Name" 
+                                      SelectedValuePath="Effect"
+                                      SelectedValue="{x:Bind SelectedEffect, Mode = TwoWay}"
+                                      Loaded="EffectComboBox_OnLoaded"/>
+                        </StackPanel>
+                    </muxc:Expander>
+                    <muxc:Expander
+                              IsExpanded="True"
+                              HorizontalAlignment="Stretch"
+                              Header="Text Format">
+                        <StackPanel Orientation="Vertical" 
+                                    Spacing="10" 
+                                    HorizontalAlignment="Stretch">
+                            <controls:FontPickerBox x:Name="FontPicker" HorizontalAlignment="Stretch"/>
+                            <muxc:NumberBox x:Name="FontSizeNumBox"
+                                                Header="Font size"
+                                                Value="36"
+                                                SpinButtonPlacementMode="Inline"
+                                                Maximum="72"
+                                                Minimum="9"
+                                                SmallChange="1"
+                                                LargeChange="10"/>
+                            <ComboBox x:Name="FontStretchComboBox"
+                                      HorizontalAlignment="Stretch"
+                                      Header="Font Stretch"
+                                      ItemsSource="{x:Bind FontStretches}"
+                                      DisplayMemberPath="Name"
+                                      SelectedValuePath="Value"/>
+                            <ComboBox x:Name="FontStyleComboBox"
+                                      HorizontalAlignment="Stretch"
+                                      Header="Font Style"
+                                      ItemsSource="{x:Bind FontStyles}" 
+                                      DisplayMemberPath="Name"
+                                      SelectedValuePath="Value"/>
+                            <ComboBox x:Name="FontWeightComboBox"
+                                      HorizontalAlignment="Stretch"
+                                      Header="Font Weight"
+                                      ItemsSource="{x:Bind FontWeightsList}"
+                                      DisplayMemberPath="Name"
+                                      SelectedValuePath="Value"/>
+                        </StackPanel>
+                    </muxc:Expander>
+                    <muxc:Expander
+                              IsExpanded="True"
+                              HorizontalAlignment="Stretch"
+                              Header="Text">
+                        <StackPanel Orientation="Vertical" Spacing="10" HorizontalAlignment="Stretch">
+                            <ComboBox x:Name="TextComboBox"
+                                  Margin="5,0"
+                                  MinWidth="200"
+                                  HorizontalAlignment="Stretch"
+                                  SelectedIndex="{x:Bind SelectedSampleTextIndex, Mode = TwoWay}"
+                                  Loaded="TextComboBox_OnLoaded">
+                                <x:String>In Other Words</x:String>
+                                <x:String>Mencius (in Chinese)</x:String>
+                            </ComboBox>
+                            <ToggleButton x:Name="AutoPlayButton" 
+                                            Margin="5,0"
+                                            Click="AutoPlayButton_OnClick"
+                                            HorizontalAlignment="Center">
+                                <StackPanel Orientation="Horizontal" Spacing="5">
+                                    <SymbolIcon Symbol="Play"/>
+                                    <TextBlock Text="Play sample texts"/>
+                                </StackPanel>
+                            </ToggleButton>
+                            <TextBox x:Name="InputBox" 
+                                 Grid.Row="2" 
+                                 Grid.ColumnSpan="2"
+                                 Margin="10"
+                                 AcceptsReturn="True" 
+                                 TextWrapping="Wrap"
+                                 HorizontalAlignment="Stretch"
+                                 ScrollViewer.HorizontalScrollMode="Disabled"
+                                 ScrollViewer.VerticalScrollMode="Auto"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                 TextChanged="InputBox_OnTextChanged"/>
+                        </StackPanel>
+                    </muxc:Expander>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <TBFX:TextBlockFX x:Name="TBFX"
+                          Grid.Column="1"
+                          Margin="10" 
+                          MinHeight="300"
+                          MaxHeight="600"
+                          FontFamily="{Binding ElementName=FontPicker, Path=FontFamily,Mode=OneWay}"
+                          FontSize="{Binding ElementName=FontSizeNumBox, Path=Value, Mode=OneWay}"
+                          FontStyle="{Binding ElementName=FontStyleComboBox, Path=SelectedValue, Mode= OneWay}"
+                          FontStretch="{Binding ElementName=FontStretchComboBox, Path=SelectedValue, Mode=OneWay}"
+                          FontWeight="{Binding ElementName=FontWeightComboBox, Path=SelectedValue, Mode=OneWay}"
+                          TextAlignment="Center"
+                          TextTrimming="CharacterEllipsis"
+                          TextWrapping="Wrap"
+                          RedrawStateChanged="TBFX_OnRedrawStateChanged">
+        </TBFX:TextBlockFX>
     </Grid>
 </Page>

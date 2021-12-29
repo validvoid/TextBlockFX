@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TextBlockFX;
 using TextBlockFX.Win2D.UWP;
 using TextBlockFX.Win2D.UWP.Effects;
+using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -89,12 +91,59 @@ namespace Sample.UWP
             }
         }
 
+        public List<ComboWrapper<FontStretch>> FontStretches => GetEnumAsList<FontStretch>();
+
+        public List<ComboWrapper<FontStyle>> FontStyles => GetEnumAsList<FontStyle>();
+
+        public List<ComboWrapper<FontWeight>> FontWeightsList => new List<ComboWrapper<FontWeight>>()
+        {
+            new ComboWrapper<FontWeight>("ExtraBlack", FontWeights.ExtraBlack),
+            new ComboWrapper<FontWeight>("Black", FontWeights.Black),
+            new ComboWrapper<FontWeight>("ExtraBold", FontWeights.ExtraBold),
+            new ComboWrapper<FontWeight>("Bold", FontWeights.Bold),
+            new ComboWrapper<FontWeight>("SemiBold", FontWeights.SemiBold),
+            new ComboWrapper<FontWeight>("Medium", FontWeights.Medium),
+            new ComboWrapper<FontWeight>("Normal", FontWeights.Normal),
+            new ComboWrapper<FontWeight>("SemiLight", FontWeights.SemiLight),
+            new ComboWrapper<FontWeight>("Light", FontWeights.Light),
+            new ComboWrapper<FontWeight>("ExtraLight", FontWeights.ExtraLight),
+            new ComboWrapper<FontWeight>("Thin", FontWeights.Thin),
+        };
+
         public MainPage()
         {
             this.InitializeComponent();
+            this.Loaded += MainPage_Loaded;
             _timer.Interval = TimeSpan.FromMilliseconds(1000);
             _timer.Tick += _timer_Tick;
             _sampleTexts = _inOtherWords;
+        }
+
+        private void MainPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i < FontStretches.Count; i++)
+            {
+                if (FontStretches[i].Value == FontStretch.Normal)
+                {
+                    FontStretchComboBox.SelectedIndex = i;
+                }
+            }
+
+            for (int i = 0; i < FontStyles.Count; i++)
+            {
+                if (FontStyles[i].Value == FontStyle.Normal)
+                {
+                    FontStyleComboBox.SelectedIndex = i;
+                }
+            }
+
+            for (int i = 0; i < FontWeightsList.Count; i++)
+            {
+                if (FontWeightsList[i].Value.Weight == FontWeights.Normal.Weight)
+                {
+                    FontWeightComboBox.SelectedIndex = i;
+                }
+            }
         }
 
         private void _timer_Tick(object sender, object e)
@@ -146,6 +195,26 @@ namespace Sample.UWP
         private void TextComboBox_OnLoaded(object sender, RoutedEventArgs e)
         {
             TextComboBox.SelectedIndex = 0;
+        }
+
+        private static List<ComboWrapper<T>> GetEnumAsList<T>()
+        {
+            var names = Enum.GetNames(typeof(T)).ToList();
+            var values = Enum.GetValues(typeof(T)).Cast<T>().ToList();
+            return names.Zip(values, (k, v) => new ComboWrapper<T>(k, v)).ToList();
+        }
+    }
+
+    public class ComboWrapper<T>
+    {
+        public string Name { get; }
+
+        public T Value { get; }
+
+        public ComboWrapper(string name, T value)
+        {
+            Name = name;
+            Value = value;
         }
     }
 

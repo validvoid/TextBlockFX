@@ -5,14 +5,20 @@
     xmlns:xaml="using:Microsoft.Graphics.Canvas.UI.Xaml">
 
     <Style TargetType="local:TextBlockFX" >
+        <Setter Property="FontFamily" Value="XamlAutoFontFamily" />
+        <Setter Property="FontSize" Value="{StaticResource BodyTextBlockFontSize}" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="Foreground" Value="{ThemeResource DefaultTextForegroundThemeBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:TextBlockFX">
                     <Border x:Name="ContentBorder"
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}">
-                        <xaml:CanvasAnimatedControl x:Name="AnimatedCanvas" 
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                            <xaml:CanvasAnimatedControl x:Name="AnimatedCanvas" 
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Stretch"/>
                     </Border>

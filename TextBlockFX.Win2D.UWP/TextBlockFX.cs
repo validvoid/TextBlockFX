@@ -108,143 +108,6 @@ namespace TextBlockFX.Win2D.UWP
         }
 
         /// <summary>
-        /// Identifies the FontFamily dependency property.
-        /// </summary>
-        public new static readonly DependencyProperty FontFamilyProperty = DependencyProperty.Register(
-            "FontFamily", typeof(FontFamily), typeof(TextBlockFX), new PropertyMetadata(default(FontFamily)));
-
-        /// <summary>
-        /// Gets or sets the preferred top-level font family for the text content.
-        /// </summary>
-        public new FontFamily FontFamily
-        {
-            get { return (FontFamily)GetValue(FontFamilyProperty); }
-            set
-            {
-                _fontFamily = value.Source;
-                SetValue(FontFamilyProperty, value);
-            }
-        }
-
-        /// <summary>
-        /// Identifies the FontSize dependency property.
-        /// </summary>
-        public new static readonly DependencyProperty FontSizeProperty = DependencyProperty.Register(
-            "FontSize", typeof(double), typeof(TextBlockFX), new PropertyMetadata(default(double)));
-
-        /// <summary>
-        /// Gets or sets the font size for the text content.
-        /// </summary>
-        public new double FontSize
-        {
-            get { return (double)GetValue(FontSizeProperty); }
-            set
-            {
-                _fontSize = (float)value;
-                SetValue(FontSizeProperty, value);
-            }
-        }
-
-        /// <summary>
-        /// Identifies the FontStretch dependency property.
-        /// </summary>
-        public new static readonly DependencyProperty FontStretchProperty = DependencyProperty.Register(
-            "FontStretch", typeof(FontStretch), typeof(TextBlockFX), new PropertyMetadata(default(FontStretch)));
-
-        /// <summary>
-        /// Gets or sets the font stretch for the text content.
-        /// </summary>
-        public new FontStretch FontStretch
-        {
-            get { return (FontStretch)GetValue(FontStretchProperty); }
-            set
-            {
-                _fontStretch = value;
-                SetValue(FontStretchProperty, value);
-            }
-        }
-
-        /// <summary>
-        /// Identifies the FontStyle dependency property.
-        /// </summary>
-        public new static readonly DependencyProperty FontStyleProperty = DependencyProperty.Register(
-            "FontStyle", typeof(FontStyle), typeof(TextBlockFX), new PropertyMetadata(default(FontStyle)));
-
-        /// <summary>
-        /// Gets or sets the font style for the content.
-        /// </summary>
-        public new FontStyle FontStyle
-        {
-            get { return (FontStyle)GetValue(FontStyleProperty); }
-            set
-            {
-                _fontStyle = value;
-                SetValue(FontStyleProperty, value);
-            }
-        }
-
-        /// <summary>
-        /// Identifies the FontStyle dependency property.
-        /// </summary>
-        public new static readonly DependencyProperty FontWeightProperty = DependencyProperty.Register(
-            "FontWeight", typeof(FontWeight), typeof(TextBlockFX), new PropertyMetadata(default(FontWeight)));
-
-        /// <summary>
-        /// Gets or sets the top-level font weight for the TextBlockFX.
-        /// </summary>
-        public new FontWeight FontWeight
-        {
-            get { return (FontWeight)GetValue(FontWeightProperty); }
-            set
-            {
-                _fontWeight = value;
-                SetValue(FontWeightProperty, value);
-            }
-        }
-
-        /// <summary>
-        /// Identifies the Foreground dependency property.
-        /// </summary>
-        public new static readonly DependencyProperty ForegroundProperty = DependencyProperty.Register(
-            "Foreground", typeof(Brush), typeof(TextBlockFX), new PropertyMetadata(default(Brush)));
-
-        /// <summary>
-        /// Gets or sets the Brush to apply to the text contents of the TextBlockFX.
-        /// </summary>
-        public new Brush Foreground
-        {
-            get { return (Brush)GetValue(ForegroundProperty); }
-            set
-            {
-                if (value is SolidColorBrush colorBrush)
-                {
-                    _textColor = colorBrush.Color;
-                    _textBrush = null;
-                }
-                else if (value is LinearGradientBrush linearGradientBrush)
-                {
-                    if (_animatedCanvas != null)
-                    {
-                        var stops = new CanvasGradientStop[linearGradientBrush.GradientStops.Count];
-
-                        foreach (var gradientStop in linearGradientBrush.GradientStops)
-                        {
-                            var stop = new CanvasGradientStop()
-                            {
-                                Color = gradientStop.Color,
-                                Position = (float)gradientStop.Offset
-                            };
-                        }
-
-                        _textBrush = new CanvasLinearGradientBrush(_animatedCanvas, stops);
-                    }
-                }
-
-                SetValue(ForegroundProperty, value);
-            }
-        }
-
-        /// <summary>
         /// Identifies the TextAlignment dependency property.
         /// </summary>
         public static readonly DependencyProperty TextAlignmentProperty = DependencyProperty.Register(
@@ -338,7 +201,14 @@ namespace TextBlockFX.Win2D.UWP
         public TextBlockFX()
         {
             this.DefaultStyleKey = typeof(TextBlockFX);
+
             this.Loaded += TextBlockFX_Loaded;
+            this.RegisterPropertyChangedCallback(TextBlockFX.ForegroundProperty, ForegroundChangedCallback);
+            this.RegisterPropertyChangedCallback(TextBlockFX.FontFamilyProperty, FontFamilyChangedCallback);
+            this.RegisterPropertyChangedCallback(TextBlockFX.FontSizeProperty, FontSizeChangedCallback);
+            this.RegisterPropertyChangedCallback(TextBlockFX.FontStretchProperty, FontStretchChangedCallback);
+            this.RegisterPropertyChangedCallback(TextBlockFX.FontStyleProperty, FontStyleChangedCallback);
+            this.RegisterPropertyChangedCallback(TextBlockFX.FontWeightProperty, FontWeightChangedCallback);
 
             _textFormat.TrimmingSign = CanvasTrimmingSign.Ellipsis;
         }
@@ -359,6 +229,7 @@ namespace TextBlockFX.Win2D.UWP
             this.SizeChanged += TextBlockFX_SizeChanged;
 
             ApplyTextFormat();
+            ApplyTextForeground();
 
             if (_animatedCanvas != null)
             {
@@ -372,6 +243,35 @@ namespace TextBlockFX.Win2D.UWP
         {
             SetRedrawState(RedrawState.LayoutChanged);
         }
+
+        #region Property Changed Callbacks
+
+        private void ForegroundChangedCallback(DependencyObject sender, DependencyProperty dp)
+        {
+            ApplyTextForeground();
+        }
+        private void FontFamilyChangedCallback(DependencyObject sender, DependencyProperty dp)
+        {
+            _fontFamily = FontFamily.Source;
+        }
+        private void FontSizeChangedCallback(DependencyObject sender, DependencyProperty dp)
+        {
+            _fontSize = (float)FontSize;
+        }
+        private void FontStretchChangedCallback(DependencyObject sender, DependencyProperty dp)
+        {
+            _fontStretch = FontStretch;
+        }
+
+        private void FontStyleChangedCallback(DependencyObject sender, DependencyProperty dp)
+        {
+            _fontStyle = FontStyle;
+        }
+        private void FontWeightChangedCallback(DependencyObject sender, DependencyProperty dp)
+        {
+            _fontWeight = FontWeight;
+        }
+        #endregion
 
         #region Canvas Events
 
@@ -418,7 +318,7 @@ namespace TextBlockFX.Win2D.UWP
                     _newTextLayout = new CanvasTextLayout(sender, _newText, _textFormat,
                         (float)sender.Size.Width,
                         (float)sender.Size.Height);
-                    _newTextLayout.Options = CanvasDrawTextOptions.EnableColorFont;
+                    _newTextLayout.Options = CanvasDrawTextOptions.EnableColorFont | CanvasDrawTextOptions.NoPixelSnap;
                     _newTextLayout.VerticalAlignment = CanvasVerticalAlignment.Center;
 
                     GenerateDiffResults();
@@ -436,13 +336,13 @@ namespace TextBlockFX.Win2D.UWP
                 _oldTextLayout = new CanvasTextLayout(sender, _oldText, _textFormat,
                     (float)sender.Size.Width,
                     (float)sender.Size.Height);
-                _oldTextLayout.Options = CanvasDrawTextOptions.EnableColorFont;
+                _oldTextLayout.Options = CanvasDrawTextOptions.EnableColorFont | CanvasDrawTextOptions.NoPixelSnap;
                 _oldTextLayout.VerticalAlignment = CanvasVerticalAlignment.Center;
 
                 _newTextLayout = new CanvasTextLayout(sender, _newText, _textFormat,
                     (float)sender.Size.Width,
                     (float)sender.Size.Height);
-                _newTextLayout.Options = CanvasDrawTextOptions.EnableColorFont;
+                _newTextLayout.Options = CanvasDrawTextOptions.EnableColorFont | CanvasDrawTextOptions.NoPixelSnap;
                 _newTextLayout.VerticalAlignment = CanvasVerticalAlignment.Center;
 
                 GenerateDiffResults();
@@ -478,6 +378,7 @@ namespace TextBlockFX.Win2D.UWP
                     _textFormat,
                     (float)sender.Size.Width,
                     (float)sender.Size.Height);
+                ctl.Options = CanvasDrawTextOptions.EnableColorFont;
 
                 args.DrawingSession.DrawTextLayout(ctl, 0, 0, _textColor);
             }
@@ -507,12 +408,47 @@ namespace TextBlockFX.Win2D.UWP
             _textFormat.FontStretch = _fontStretch;
             _textFormat.FontStyle = _fontStyle;
             _textFormat.FontWeight = _fontWeight;
-            _textFormat.Options = CanvasDrawTextOptions.EnableColorFont;
+            _textFormat.Options = CanvasDrawTextOptions.EnableColorFont | CanvasDrawTextOptions.NoPixelSnap;
             _textFormat.HorizontalAlignment = Win2dHelpers.MapCanvasHorizontalAlignment(_textAlignment);
             _textFormat.VerticalAlignment = CanvasVerticalAlignment.Center;
             _textFormat.Direction = Win2dHelpers.MapTextDirection(_textDirection);
             _textFormat.TrimmingGranularity = Win2dHelpers.MapTrimmingGranularity(_textTrimming);
             _textFormat.WordWrapping = Win2dHelpers.MapWordWrapping(_textWrapping);
+        }
+
+        private void ApplyTextForeground()
+        {
+            if (Foreground is SolidColorBrush colorBrush)
+            {
+                _textColor = colorBrush.Color;
+                _textBrush = null;
+            }
+            else if (Foreground is LinearGradientBrush linearGradientBrush)
+            {
+                if (_animatedCanvas != null)
+                {
+                    var stops = new CanvasGradientStop[linearGradientBrush.GradientStops.Count];
+
+                    foreach (var gradientStop in linearGradientBrush.GradientStops)
+                    {
+                        var stop = new CanvasGradientStop()
+                        {
+                            Color = gradientStop.Color,
+                            Position = (float)gradientStop.Offset
+                        };
+                    }
+
+                    _textBrush = new CanvasLinearGradientBrush(_animatedCanvas, stops);
+                }
+            }
+            else
+            {
+                if (Application.Current.Resources["DefaultTextForegroundThemeBrush"] is SolidColorBrush defaultForegroundBrush)
+                {
+                    _textColor = defaultForegroundBrush.Color;
+                    _textBrush = null;
+                }
+            }
         }
 
         private void GenerateDiffResults()
