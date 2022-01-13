@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Windows.Foundation;
 using Windows.UI.Core;
+using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI;
@@ -212,14 +214,6 @@ namespace TextBlockFX.Win2D.UWP
 
             _textFormat.TrimmingSign = CanvasTrimmingSign.Ellipsis;
         }
-
-        private void TextBlockFX_Loaded(object sender, RoutedEventArgs e)
-        {
-            _newText = Text ?? string.Empty;
-
-            SetRedrawState(RedrawState.TextChanged, false);
-        }
-
         /// <inheritdoc />
         protected override void OnApplyTemplate()
         {
@@ -237,6 +231,13 @@ namespace TextBlockFX.Win2D.UWP
                 _animatedCanvas.Update += AnimatedCanvas_Update;
                 _animatedCanvas.Draw += AnimatedCanvas_Draw;
             }
+        }
+
+        private void TextBlockFX_Loaded(object sender, RoutedEventArgs e)
+        {
+            _newText = Text ?? string.Empty;
+
+            SetRedrawState(RedrawState.TextChanged, false);
         }
 
         private void TextBlockFX_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -315,11 +316,7 @@ namespace TextBlockFX.Win2D.UWP
                     _oldText = _newText;
                     _oldTextLayout = _newTextLayout;
 
-                    _newTextLayout = new CanvasTextLayout(sender, _newText, _textFormat,
-                        (float)sender.Size.Width,
-                        (float)sender.Size.Height);
-                    _newTextLayout.Options = CanvasDrawTextOptions.EnableColorFont | CanvasDrawTextOptions.NoPixelSnap;
-                    _newTextLayout.VerticalAlignment = CanvasVerticalAlignment.Center;
+                    GenerateNewTextLayout(sender);
 
                     GenerateDiffResults();
 
@@ -332,19 +329,11 @@ namespace TextBlockFX.Win2D.UWP
             if (_currentState == RedrawState.TextChanged)
             {
                 ApplyTextFormat();
-
-                _oldTextLayout = new CanvasTextLayout(sender, _oldText, _textFormat,
-                    (float)sender.Size.Width,
-                    (float)sender.Size.Height);
-                _oldTextLayout.Options = CanvasDrawTextOptions.EnableColorFont | CanvasDrawTextOptions.NoPixelSnap;
-                _oldTextLayout.VerticalAlignment = CanvasVerticalAlignment.Center;
-
-                _newTextLayout = new CanvasTextLayout(sender, _newText, _textFormat,
-                    (float)sender.Size.Width,
-                    (float)sender.Size.Height);
-                _newTextLayout.Options = CanvasDrawTextOptions.EnableColorFont | CanvasDrawTextOptions.NoPixelSnap;
-                _newTextLayout.VerticalAlignment = CanvasVerticalAlignment.Center;
-
+                
+                GenerateOldTextLayout(sender);
+                
+                GenerateNewTextLayout(sender);
+                
                 GenerateDiffResults();
 
                 _animationBeginTime = args.Timing.TotalTime;
@@ -449,6 +438,24 @@ namespace TextBlockFX.Win2D.UWP
                     _textBrush = null;
                 }
             }
+        }
+
+        private void GenerateOldTextLayout(ICanvasAnimatedControl resourceCreator)
+        {
+            _oldTextLayout = new CanvasTextLayout(resourceCreator, _oldText, _textFormat,
+                (float)(resourceCreator.Size.Width),
+                (float)(resourceCreator.Size.Height));
+            _oldTextLayout.Options = CanvasDrawTextOptions.EnableColorFont | CanvasDrawTextOptions.NoPixelSnap;
+            _oldTextLayout.VerticalAlignment = CanvasVerticalAlignment.Center;
+        }
+        
+        private void GenerateNewTextLayout(ICanvasAnimatedControl resourceCreator)
+        {
+            _newTextLayout = new CanvasTextLayout(resourceCreator, _newText, _textFormat,
+                (float)(resourceCreator.Size.Width),
+                (float)(resourceCreator.Size.Height));
+            _newTextLayout.Options = CanvasDrawTextOptions.EnableColorFont | CanvasDrawTextOptions.NoPixelSnap;
+            _newTextLayout.VerticalAlignment = CanvasVerticalAlignment.Center;
         }
 
         private void GenerateDiffResults()
