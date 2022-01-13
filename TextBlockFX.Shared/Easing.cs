@@ -39,6 +39,9 @@ namespace TextBlockFX
             BounceIn,
             BounceOut,
             BounceInOut,
+            BackIn,
+            BackOut,
+            BackInOut,
         }
 
         public static float UpdateProgress(float k, EasingFunction easing = EasingFunction.Linear)
@@ -130,6 +133,15 @@ namespace TextBlockFX
                     break;
                 case EasingFunction.BounceInOut:
                     r = BounceInOut(k);
+                    break;
+                case EasingFunction.BackIn:
+                    r= BackIn(k);
+                    break;
+                case EasingFunction.BackOut:
+                    r = BackOut(k);
+                    break;
+                case EasingFunction.BackInOut:
+                    r = BackInOut(k);
                     break;
                 default:
                     r = Linear(k);
@@ -309,6 +321,22 @@ namespace TextBlockFX
         {
             if (k < 0.5f) return BounceIn(k * 2f) * 0.5f;
             return BounceOut(k * 2f - 1f) * 0.5f + 0.5f;
+        }
+
+        private static float BackIn(float k)
+        {
+            return k * k * ((1.70158f + 1f) * k - 1.70158f);
+        }
+
+        private static float BackOut(float k)
+        {
+            return (k -= 1f) * k * ((1.70158f + 1f) * k + 1.70158f) + 1f;
+        }
+
+        private static float BackInOut(float k)
+        {
+            if ((k *= 2f) < 1f) return 0.5f * (k * k * ((1.70158f + 1f) * k - 1.70158f));
+            return 0.5f * ((k -= 2f) * k * ((1.70158f + 1f) * k + 1.70158f) + 2f);
         }
     }
 }

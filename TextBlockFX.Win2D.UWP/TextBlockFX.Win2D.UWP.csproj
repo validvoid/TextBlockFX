@@ -124,9 +124,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Effects\Blur.cs" />
-    <Compile Include="Effects\Bounce.cs" />
+    <Compile Include="Effects\Elastic.cs" />
     <Compile Include="Effects\Default.cs" />
     <Compile Include="Effects\MotionBlur.cs" />
+    <Compile Include="Effects\Pivot.cs" />
     <Compile Include="Effects\Zoom.cs" />
     <Compile Include="ITextEffect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

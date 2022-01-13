@@ -7,8 +7,7 @@ using TextBlockFX.Win2D.UWP.Effects;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+using Pivot = TextBlockFX.Win2D.UWP.Effects.Pivot;
 
 namespace Sample.UWP
 {
@@ -59,8 +58,9 @@ namespace Sample.UWP
             new BuiltInEffect("Default", new Default()),
             new BuiltInEffect("Motion Blur", new MotionBlur()),
             new BuiltInEffect("Blur", new Blur()),
-            new BuiltInEffect("Bounce", new Bounce()),
-            new BuiltInEffect("Zoom", new Zoom())
+            new BuiltInEffect("Elastic", new Elastic()),
+            new BuiltInEffect("Zoom", new Zoom()),
+            new BuiltInEffect("Pivot", new Pivot())
         };
 
         public ITextEffect SelectedEffect
