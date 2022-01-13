@@ -556,6 +556,7 @@ namespace TextBlockFX.Win2D.UWP
             if (isFinished)
             {
                 cluster.Progress = 1.0f;
+                cluster.IsAnimationFinished = true;
                 return true;
             }
 

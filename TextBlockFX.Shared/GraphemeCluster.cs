@@ -42,6 +42,8 @@ namespace TextBlockFX
         /// </summary>
         public float Progress { get; set; }
 
+        public bool IsAnimationFinished { get; internal set; }
+
         public bool Equals(GraphemeCluster other)
         {
             return other != null && string.Equals(this.Characters, other.Characters, StringComparison.Ordinal);
