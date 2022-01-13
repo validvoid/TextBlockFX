@@ -122,9 +122,7 @@
 
         <TBFX:TextBlockFX x:Name="TBFX"
                           Grid.Column="1"
-                          Margin="10" 
-                          MinHeight="300"
-                          MaxHeight="600"
+                          Margin="10"
                           FontFamily="{Binding ElementName=FontPicker, Path=FontFamily,Mode=OneWay}"
                           FontSize="{Binding ElementName=FontSizeNumBox, Path=Value, Mode=OneWay}"
                           FontStyle="{Binding ElementName=FontStyleComboBox, Path=SelectedValue, Mode= OneWay}"

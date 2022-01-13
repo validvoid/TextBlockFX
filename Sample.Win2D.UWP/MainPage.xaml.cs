@@ -58,7 +58,9 @@ namespace Sample.UWP
         {
             new BuiltInEffect("Default", new Default()),
             new BuiltInEffect("Motion Blur", new MotionBlur()),
-            new BuiltInEffect("Blur", new Blur())
+            new BuiltInEffect("Blur", new Blur()),
+            new BuiltInEffect("Bounce", new Bounce()),
+            new BuiltInEffect("Zoom", new Zoom())
         };
 
         public ITextEffect SelectedEffect
