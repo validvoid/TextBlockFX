@@ -50,6 +50,32 @@ namespace Sample.UWP
             "曾益其所不能"
         };
 
+        private readonly string[] _textsOfMakenaide = new[]
+        {
+            "ふとした瞬間に 視線がぶつかる",
+            "幸福のときめき 覚えているでしょ",
+            "パステルカラーの季節に恋した",
+            "あの日のように 輝いてる",
+            "あなたでいてね",
+            "負けないで もう少し",
+            "最後まで 走り抜けて",
+            "どんなに 離れてても",
+            "心は そばにいるわ",
+            "追いかけて 遥かな夢を",
+        };
+
+        private readonly string[] _textsOfOdeToJoy = new[]
+        {
+            "Wem der große Wurf gelungen,",
+            "Eines Freundes Freund zu sein;",
+            "Wer ein holdes Weib errungen,",
+            "Mische seinen Jubel ein!",
+            "Ja, wer auch nur eine Seele",
+            "Sein nennt auf dem Erdenrund!",
+            "Und wer's nie gekonnt, der stehle",
+            "Weinend sich aus diesem Bund!",
+        };
+
         private ITextEffect _selectedEffect;
         private int _selectedSampleTextIndex;
 
@@ -88,6 +114,12 @@ namespace Sample.UWP
                         break;
                     case 1:
                         _sampleTexts = _textsOfMencius;
+                        break;
+                    case 2:
+                        _sampleTexts = _textsOfMakenaide;
+                        break;
+                    case 3:
+                        _sampleTexts = _textsOfOdeToJoy;
                         break;
                 }
             }

@@ -92,6 +92,8 @@
                                   Loaded="TextComboBox_OnLoaded">
                                 <x:String>In Other Words</x:String>
                                 <x:String>Mencius (in Chinese)</x:String>
+                                <x:String>Makenaide (in Japanese)</x:String>
+                                <x:String>"Ode to Joy (Symphony No. 9 in D minor, Op. 125)</x:String>
                             </ComboBox>
                             <ToggleButton x:Name="AutoPlayButton" 
                                             Margin="5,0"
